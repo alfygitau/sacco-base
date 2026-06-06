@@ -3,8 +3,9 @@ import { MOCK_SACCOS } from "../../constants/saccos";
 import { statusColor, tierBadge } from "../../constants/themes";
 import { useNavigate } from "react-router-dom";
 
-export default function DashboardView({ setActive }) {
+export default function DashboardView() {
   const navigate = useNavigate();
+
   const stats = [
     {
       label: "Total SACCOs",
@@ -40,9 +41,71 @@ export default function DashboardView({ setActive }) {
     },
   ];
 
-  const recent = MOCK_SACCOS.slice(0, 4);
+  const recentSaccos = MOCK_SACCOS.slice(0, 4);
 
-  // Dynamic Summary Mappings for high-fidelity granularity
+  // High-fidelity datasets for the new summary tables
+  const recentUsers = [
+    {
+      name: "David Kiprop",
+      email: "d.kiprop@nguvu.co.ke",
+      role: "Credit Officer",
+      sacco: "Nguvu Sacco",
+      time: "10 mins ago",
+    },
+    {
+      name: "Lucy Nyambura",
+      email: "l.nyambura@hazina.co.ke",
+      role: "Super Admin",
+      sacco: "Hazina Sacco",
+      time: "5 mins ago",
+    },
+    {
+      name: "James Kariuki",
+      email: "j.kariuki@elimu.co.ke",
+      role: "Super Admin",
+      sacco: "Elimu Sacco",
+      time: "2 hrs ago",
+    },
+    {
+      name: "Beatrice Kwamboka",
+      email: "b.kwamboka@sukariwest.co.ke",
+      role: "Teller",
+      sacco: "Sukari West Sacco",
+      time: "5 hrs ago",
+    },
+  ];
+
+  const recentBranches = [
+    {
+      name: "Nairobi Central Head Office",
+      code: "BR-NBO-01",
+      type: "HQ + Branch",
+      float: "KES 4.5M",
+      status: "active",
+    },
+    {
+      name: "Mombasa Coastal Hub",
+      code: "BR-MSA-02",
+      type: "Full Branch",
+      float: "KES 1.8M",
+      status: "active",
+    },
+    {
+      name: "Nakuru Agriculture Center",
+      code: "BR-NKR-03",
+      type: "Full Branch",
+      float: "KES 1.2M",
+      status: "active",
+    },
+    {
+      name: "Eldoret Grain Belt Office",
+      code: "BR-ELD-05",
+      type: "Satellite",
+      float: "KES 400K",
+      status: "pending",
+    },
+  ];
+
   const accountProductMetrics = [
     {
       name: "Savings Accounts",
@@ -142,7 +205,7 @@ export default function DashboardView({ setActive }) {
               cursor: "pointer",
               fontWeight: 500,
             }}
-            onClick={() => setActive("organizations")}
+            onClick={() => navigate("/organizations")}
           >
             Review now →
           </span>
@@ -165,9 +228,8 @@ export default function DashboardView({ setActive }) {
         ))}
       </div>
 
-      {/* Primary Infrastructure Summaries Layout Block */}
+      {/* Row 1: Organizations & Onboarding Status */}
       <div className="grid-2">
-        {/* Recent Organizations Section Component */}
         <div className="card">
           <div
             className="flex justify-between items-center"
@@ -179,7 +241,7 @@ export default function DashboardView({ setActive }) {
             </div>
             <button
               className="btn btn-ghost btn-sm"
-              onClick={() => setActive("organizations")}
+              onClick={() => navigate("/organizations")}
             >
               View all
             </button>
@@ -195,7 +257,7 @@ export default function DashboardView({ setActive }) {
                 </tr>
               </thead>
               <tbody>
-                {recent.map((s) => (
+                {recentSaccos.map((s) => (
                   <tr key={s.id}>
                     <td>
                       <strong>{s.name}</strong>
@@ -234,7 +296,6 @@ export default function DashboardView({ setActive }) {
           </div>
         </div>
 
-        {/* Onboarding Performance Segment */}
         <div className="card">
           <div className="card-title" style={{ marginBottom: 16 }}>
             Onboarding Completion status
@@ -275,9 +336,171 @@ export default function DashboardView({ setActive }) {
         </div>
       </div>
 
-      {/* Enhanced Summary Data Panels (Account Products & Loan Portfolios) */}
+      {/* Row 2: Recent Users & Recent Branches */}
       <div className="grid-2" style={{ marginTop: 20 }}>
-        {/* Account Deposit Products Summary Module */}
+        <div className="card">
+          <div
+            className="flex justify-between items-center"
+            style={{ marginBottom: 16 }}
+          >
+            <div>
+              <div className="card-title">Recent User Operations</div>
+              <div className="card-sub">Active administrative session logs</div>
+            </div>
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={() => navigate("/admins")}
+            >
+              View all
+            </button>
+          </div>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>User Identity</th>
+                  <th>Assigned Role</th>
+                  <th>Tenant SACCO</th>
+                  <th>Activity Log</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentUsers.map((user, idx) => (
+                  <tr key={idx}>
+                    <td>
+                      <div>
+                        <span
+                          style={{ fontWeight: 600, color: "var(--text1)" }}
+                        >
+                          {user.name}
+                        </span>
+                        <div
+                          style={{
+                            fontSize: 11,
+                            color: "var(--text3)",
+                            marginTop: 2,
+                          }}
+                        >
+                          {user.email}
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span
+                        className="badge"
+                        style={{
+                          background:
+                            user.role === "Super Admin"
+                              ? "#EEEDFE"
+                              : "var(--bg4)",
+                          color:
+                            user.role === "Super Admin"
+                              ? "#3C3489"
+                              : "var(--text2)",
+                        }}
+                      >
+                        {user.role}
+                      </span>
+                    </td>
+                    <td>
+                      <span style={{ color: "var(--text2)" }}>
+                        {user.sacco}
+                      </span>
+                    </td>
+                    <td>
+                      <span style={{ fontSize: 12, color: "var(--text3)" }}>
+                        {user.time}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="card">
+          <div
+            className="flex justify-between items-center"
+            style={{ marginBottom: 16 }}
+          >
+            <div>
+              <div className="card-title">Recent Branches Provisioned</div>
+              <div className="card-sub">Latest regional node additions</div>
+            </div>
+            <button
+              className="btn btn-ghost btn-sm"
+              onClick={() => navigate("/branches")}
+            >
+              View all
+            </button>
+          </div>
+          <div className="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Branch Name</th>
+                  <th>Type</th>
+                  <th>Vault Float</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {recentBranches.map((branch, idx) => (
+                  <tr key={idx}>
+                    <td>
+                      <div>
+                        <span
+                          style={{ fontWeight: 600, color: "var(--text1)" }}
+                        >
+                          {branch.name}
+                        </span>
+                        <div
+                          style={{
+                            fontSize: 11,
+                            color: "var(--text3)",
+                            marginTop: 2,
+                          }}
+                        >
+                          ID: {branch.code}
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      <span style={{ fontSize: 12, color: "var(--text2)" }}>
+                        {branch.type}
+                      </span>
+                    </td>
+                    <td>
+                      <strong style={{ color: "var(--text1)" }}>
+                        {branch.float}
+                      </strong>
+                    </td>
+                    <td>
+                      <span
+                        className="badge"
+                        style={{
+                          background:
+                            branch.status === "active"
+                              ? "rgba(16,185,129,0.12)"
+                              : "rgba(245,158,11,0.12)",
+                          color:
+                            branch.status === "active" ? "#34d399" : "#fbbf24",
+                        }}
+                      >
+                        {branch.status}
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      {/* Row 3: Account Products & Loan Portfolios */}
+      <div className="grid-2" style={{ marginTop: 20 }}>
         <div className="card">
           <div
             className="flex justify-between items-center"
@@ -291,7 +514,7 @@ export default function DashboardView({ setActive }) {
             </div>
             <button
               className="btn btn-ghost btn-sm"
-              onClick={() => setActive("products")}
+              onClick={() => navigate("/products")}
             >
               Manage Products
             </button>
@@ -348,7 +571,6 @@ export default function DashboardView({ setActive }) {
           </div>
         </div>
 
-        {/* System Loan Products Exposure Module */}
         <div className="card">
           <div
             className="flex justify-between items-center"
@@ -362,7 +584,7 @@ export default function DashboardView({ setActive }) {
             </div>
             <button
               className="btn btn-ghost btn-sm"
-              onClick={() => setActive("loans")}
+              onClick={() => navigate("/loans")}
             >
               Lending Rules
             </button>
@@ -431,7 +653,7 @@ export default function DashboardView({ setActive }) {
         </div>
       </div>
 
-      {/* Preferences & Shared Global Integrations Monitoring Panel */}
+      {/* Row 4: Preferences & Core Integrations */}
       <div className="card" style={{ marginTop: 20 }}>
         <div
           className="flex justify-between items-center"
@@ -447,7 +669,7 @@ export default function DashboardView({ setActive }) {
           </div>
           <button
             className="btn btn-ghost btn-sm"
-            onClick={() => setActive("preferences")}
+            onClick={() => navigate("/preferences")}
           >
             System Prefs
           </button>
@@ -498,68 +720,6 @@ export default function DashboardView({ setActive }) {
                 {item.status}
               </span>
             </div>
-          ))}
-        </div>
-      </div>
-
-      {/* Onboarding Walkthrough Steps Component */}
-      <div className="card" style={{ marginTop: 20 }}>
-        <div
-          className="flex justify-between items-center"
-          style={{ marginBottom: 16 }}
-        >
-          <div>
-            <div className="card-title">Quick Onboard a SACCO</div>
-            <div className="card-sub">
-              Follow the sequential pipeline steps to configure a new
-              organization instance
-            </div>
-          </div>
-        </div>
-
-        {/* Onboarding Horizontal Progress Path Tracker */}
-        <div className="steps">
-          {[
-            "Organization",
-            "Branches",
-            "Admins",
-            "Theme",
-            "Products",
-            "Loans",
-            "Preferences",
-          ].map((label, i) => (
-            <React.Fragment key={label}>
-              {i > 0 && (
-                <div className={`step-line ${i < 3 ? "done" : ""}`}></div>
-              )}
-              <div
-                className={`step ${i < 3 ? "done" : i === 3 ? "active" : ""}`}
-              >
-                <div className="step-num">{i < 3 ? "✓" : i + 1}</div>
-                <div className="step-label">{label}</div>
-              </div>
-            </React.Fragment>
-          ))}
-        </div>
-
-        {/* Programmatic Navigation Action Triggers */}
-        <div className="flex flex-wrap gap8">
-          {[
-            { path: "organizations", label: "1. Org Details" },
-            { path: "branches", label: "2. Regional Nodes" },
-            { path: "admins", label: "3. Access Controls" },
-            { path: "theme", label: "4. Brand Sync" },
-            { path: "products", label: "5. Deposit Accounts" },
-            { path: "loans", label: "6. Lending Books" },
-            { path: "preferences", label: "7. System Prefs" },
-          ].map((target, idx) => (
-            <button
-              key={target.path}
-              className={`btn btn-sm ${idx === 3 ? "btn-primary" : "btn-ghost"}`}
-              onClick={() => navigate(`/${target.path}`)}
-            >
-              {target.label}
-            </button>
           ))}
         </div>
       </div>
