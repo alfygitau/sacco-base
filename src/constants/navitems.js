@@ -1,10 +1,15 @@
 export const NAV_ITEMS = [
-  { id: "dashboard", icon: "⬡", label: "Dashboard" },
-  { id: "organizations", icon: "🏛", label: "Organizations" },
-  { id: "branches", icon: "🔀", label: "Branches" }, // Added to register the view path
-  { id: "admins", icon: "👤", label: "Admin Users" },
-  { id: "theme", icon: "🎨", label: "Theme & Branding" },
-  { id: "products", icon: "💰", label: "Account Products" },
-  { id: "loans", icon: "📋", label: "Loan Products" },
-  { id: "preferences", icon: "⚙️", label: "Preferences" },
+  // Core Analytics
+  { id: "dashboard", icon: "⬡", label: "Overview", category: "analytics" },
+
+  // Tenant Operations
+  { id: "organizations", icon: "🏛", label: "Organizations", category: "tenants" },
+  { id: "branches", icon: "🔀", label: "Regional Branches", category: "tenants" },
+  { id: "admins", icon: "👤", label: "System Admins", category: "tenants" },
+
+  // System Configurations
+  { id: "theme", icon: "🎨", label: "Theme & Branding", category: "settings" },
+  { id: "products", icon: "💰", label: "Account Products", category: "settings" },
+  { id: "loans", icon: "📋", label: "Loan Products", category: "settings" },
+  { id: "preferences", icon: "⚙️", label: "Preferences", category: "settings" },
 ];
