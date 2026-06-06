@@ -17,7 +17,7 @@ export default function DashboardView() {
     },
     {
       label: "Active Members",
-      value: "128.4K",
+      value: "10,000",
       delta: "+12%",
       up: true,
       meta: "Across all SACCOs",
