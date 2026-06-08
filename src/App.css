@@ -57,7 +57,7 @@ body,
 }
 .sidebar-logo {
   padding: 18px 24px 20px;
-  border-bottom: 1px solid var(--border);
+  /* border-bottom: 1px solid var(--border); */
   cursor: pointer;
 }
 .sidebar-logo-mark {
